@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:forumapp/view/screens/login_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
+import './view/screens/home_screen.dart';
+import './view/screens/login_screen.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -14,6 +15,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size.width;
+    final box = GetStorage();
+    final token = box.read("token");
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Forum App',
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
           displayLarge: TextStyle(fontSize: size * 0.07, fontFamily: 'Montserrat-Bold')
         )
       ),
-      home: LoginScreen(),
+      home: token == null ? LoginScreen() : HomeScreen(),
     );
   }
 }

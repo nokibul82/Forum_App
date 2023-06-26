@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../models/post_model.dart';
 
 class PostCard extends StatelessWidget {
-  // PostCard({super.key, required this.title, required this.username, required this.description});
-  //
-  // final String title;
-  // final String username;
-  // final String description;
+  const PostCard({super.key, required this.post});
+
+  final PostModel post;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +18,14 @@ class PostCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Mostai Shanto",
+          Text(post.user!.name!,
               style: Theme.of(context).textTheme.bodyMedium),
-          Text("mst23", style: Theme.of(context).textTheme.bodySmall),
+          Text(post.user!.email!, style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(
             height: 10,
           ),
           Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+              post.content!,
               style: Theme.of(context).textTheme.bodySmall),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
