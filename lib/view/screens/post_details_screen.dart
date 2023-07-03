@@ -101,10 +101,10 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
               alignment: Alignment.bottomRight,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
                     backgroundColor: Theme.of(context).colorScheme.onPrimary,
-                    onPrimary: Colors.white,
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10)),
                 onPressed: () async {
                   await _postController.createComment(widget.post.id.toString(),
                       _textEditingController.text.trim());
@@ -118,7 +118,6 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                 hintText: "Write a comment...",
                 obscureText: false,
                 textEditingController: _textEditingController),
-
           ],
         ),
       ),

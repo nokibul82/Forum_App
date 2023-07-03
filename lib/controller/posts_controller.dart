@@ -82,15 +82,16 @@ class PostController extends GetxController {
     }
   }
 
-  Future getComments(String id) async{
-    try{
+  Future getComments(String id) async {
+    try {
       comments.value.clear();
       isLoading.value = true;
 
-      var response = await http.get(Uri.parse("${url}feed/comments/${id}"), headers: {
-        "Accept": "application/json",
-        "Authorization": "Bearer ${box.read("token")}"
-      });
+      var response = await http.get(Uri.parse("${url}feed/comments/${id}"),
+          headers: {
+            "Accept": "application/json",
+            "Authorization": "Bearer ${box.read("token")}"
+          });
       if (response.statusCode == 200) {
         isLoading.value = false;
         final data = json.decode(response.body)['comments'];
@@ -104,15 +105,15 @@ class PostController extends GetxController {
             backgroundColor: Colors.redAccent,
             colorText: Colors.white);
       }
-    }catch(e){
+    } catch (e) {
       isLoading.value = false;
       print("=====================================");
       print(e.toString());
     }
   }
 
-  Future createComment(String id, String body) async{
-    try{
+  Future createComment(String id, String body) async {
+    try {
       isLoading.value = true;
       var data = {
         "body": body,
@@ -137,7 +138,34 @@ class PostController extends GetxController {
             backgroundColor: Colors.redAccent,
             colorText: Colors.white);
       }
-    }catch(e){
+    } catch (e) {
+      isLoading.value = false;
+      print("=====================================");
+      print(e.toString());
+    }
+  }
+
+  Future toggleLike(id) async {
+    try {
+      isLoading.value = true;
+      var response = await http.post(Uri.parse("${url}feed/like/$id"),
+          headers: {
+            "Accept": "application/json",
+            "Authorization": "Bearer ${box.read("token")}"
+          });
+      print("=====================================${response.statusCode}");
+      if (response.statusCode == 201) {
+        isLoading.value = false;
+      } else if(response.statusCode == 200){
+        isLoading.value = false;
+      }else{
+        isLoading.value = false;
+        Get.snackbar("❌", json.decode(response.body)["message"],
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.redAccent,
+            colorText: Colors.white);
+      }
+    } catch (e) {
       isLoading.value = false;
       print("=====================================");
       print(e.toString());
