@@ -110,4 +110,37 @@ class PostController extends GetxController {
       print(e.toString());
     }
   }
+
+  Future createComment(String id, String body) async{
+    try{
+      isLoading.value = true;
+      var data = {
+        "body": body,
+      };
+      var response = await http.post(Uri.parse("${url}feed/comment/$id"),
+          headers: {
+            "Accept": "application/json",
+            "Authorization": "Bearer ${box.read("token")}"
+          },
+          body: data);
+
+      if (response.statusCode == 201) {
+        isLoading.value = false;
+        Get.snackbar("✔", json.decode(response.body)["message"],
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.greenAccent,
+            colorText: Colors.white);
+      } else {
+        isLoading.value = false;
+        Get.snackbar("Error", json.decode(response.body)["message"],
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.redAccent,
+            colorText: Colors.white);
+      }
+    }catch(e){
+      isLoading.value = false;
+      print("=====================================");
+      print(e.toString());
+    }
+  }
 }

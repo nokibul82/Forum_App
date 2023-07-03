@@ -54,7 +54,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
             ),
             Container(
               width: double.infinity,
-              height: 260,
+              height: Get.height * 0.5,
               child: Obx(() {
                 return _postController.isLoading.value
                     ? const Center(
@@ -69,14 +69,16 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                               backgroundColor:
                                   Theme.of(context).colorScheme.onPrimary,
                               child: Text(
-                                _postController
-                                    .comments.value[index].user!.name!.toString()[0],
+                                  _postController
+                                      .comments.value[index].user!.name!
+                                      .toString()[0],
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall!
-                                      .copyWith(color: Theme.of(context).colorScheme.secondary)
-
-                              ),
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary)),
                             ),
                             title: Text(
                               _postController.comments.value[index].user!.name!,
@@ -95,19 +97,28 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
             const SizedBox(
               height: 10,
             ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                    onPrimary: Colors.white,
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                onPressed: () async {
+                  await _postController.createComment(widget.post.id.toString(),
+                      _textEditingController.text.trim());
+                  _textEditingController.clear();
+                  await _postController.getComments(widget.post.id.toString());
+                },
+                child: const Text("Comment"),
+              ),
+            ),
             InputFieldWidget(
                 hintText: "Write a comment...",
                 obscureText: false,
                 textEditingController: _textEditingController),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
-                  onPrimary: Colors.white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
-              onPressed: () {},
-              child: const Text("Comment"),
-            )
+
           ],
         ),
       ),
