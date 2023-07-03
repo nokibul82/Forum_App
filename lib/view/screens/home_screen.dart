@@ -39,15 +39,13 @@ class HomeScreen extends StatelessWidget {
               PostField(
                   hintText: "What do you want to ask ?",
                   controller: _postTextController),
-              const SizedBox(
-                height: 20,
-              ),
+
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.onPrimary,
                       onPrimary: Colors.white,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 15)),
+                          horizontal: 20, vertical: 10)),
                   onPressed: () async {
                     await _postController.createPost(
                         content: _postTextController.text.trim());

@@ -21,16 +21,22 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Forum App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey,onPrimary: Colors.black,secondary: Colors.white,),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.grey,
+          onPrimary: Colors.black,
+          secondary: Colors.white,
+        ),
+
         useMaterial3: true,
         textTheme: TextTheme(
-          bodySmall: TextStyle(fontSize: size * 0.04, fontFamily: 'Montserrat-Regular'),
-          bodyMedium: TextStyle(fontSize: size * 0.05, fontFamily: 'Montserrat-Medium'),
-          displayLarge: TextStyle(fontSize: size * 0.07, fontFamily: 'Montserrat-Bold')
-        )
+            bodySmall: TextStyle(
+                fontSize: size * 0.04, fontFamily: 'Montserrat-Regular'),
+            bodyMedium: TextStyle(
+                fontSize: size * 0.05, fontFamily: 'Montserrat-Medium'),
+            displayLarge: TextStyle(
+                fontSize: size * 0.07, fontFamily: 'Montserrat-Bold')),
       ),
       home: token == null ? LoginScreen() : HomeScreen(),
     );
   }
 }
-

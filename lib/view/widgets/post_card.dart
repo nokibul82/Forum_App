@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:forumapp/view/screens/post_details_screen.dart';
 import '../../models/post_model.dart';
+import 'package:get/get.dart';
 
 class PostCard extends StatelessWidget {
   const PostCard({super.key, required this.post});
@@ -31,7 +33,9 @@ class PostCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(onPressed: (){}, icon: const Icon(Icons.thumb_up,size: 30,)),
-              IconButton(onPressed: (){}, icon: const Icon(Icons.comment,size: 30,)),
+              IconButton(onPressed: (){
+                Get.to(PostDetailsScreen(post: post));
+              }, icon: const Icon(Icons.comment,size: 30,)),
               IconButton(onPressed: (){}, icon: const Icon(Icons.share,size: 30,)),
             ],
           )

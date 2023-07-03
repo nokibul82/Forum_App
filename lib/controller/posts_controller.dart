@@ -6,10 +6,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants/constants.dart';
+import '../models/comment_model.dart';
 import '../models/post_model.dart';
 
 class PostController extends GetxController {
   final posts = Rx<List<PostModel>>([]);
+  final comments = Rx<List<CommentModel>>([]);
   final isLoading = false.obs;
   final box = GetStorage();
 
@@ -74,6 +76,35 @@ class PostController extends GetxController {
             colorText: Colors.white);
       }
     } catch (e) {
+      isLoading.value = false;
+      print("=====================================");
+      print(e.toString());
+    }
+  }
+
+  Future getComments(String id) async{
+    try{
+      comments.value.clear();
+      isLoading.value = true;
+
+      var response = await http.get(Uri.parse("${url}feed/comments/${id}"), headers: {
+        "Accept": "application/json",
+        "Authorization": "Bearer ${box.read("token")}"
+      });
+      if (response.statusCode == 200) {
+        isLoading.value = false;
+        final data = json.decode(response.body)['comments'];
+        for (var item in data) {
+          comments.value.add(CommentModel.fromJson(item));
+        }
+      } else {
+        isLoading.value = false;
+        Get.snackbar("Error", json.decode(response.body)["message"],
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.redAccent,
+            colorText: Colors.white);
+      }
+    }catch(e){
       isLoading.value = false;
       print("=====================================");
       print(e.toString());
